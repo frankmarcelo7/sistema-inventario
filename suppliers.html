@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores - Sistema de Gestión de Inventario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <i class="bi bi-box-seam logo-icon"></i>
+            <h4 class="mb-0 fw-bold">Inventario</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> <span>Dashboard</span></a></li>
+            <li><a href="products.html"><i class="bi bi-box"></i> <span>Productos</span></a></li>
+            <li><a href="categories.html"><i class="bi bi-tags"></i> <span>Categorías</span></a></li>
+            <li class="active"><a href="suppliers.html"><i class="bi bi-truck"></i> <span>Proveedores</span></a></li>
+            <li><a href="inventory.html"><i class="bi bi-arrow-left-right"></i> <span>Movimientos</span></a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> <span>Reportes</span></a></li>
+            <li class="mt-4 border-top pt-3"><a href="profile.html"><i class="bi bi-person-circle"></i> <span>Mi Perfil</span></a></li>
+            <li><a href="index.html" class="text-danger"><i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg top-navbar glass-nav mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand">Directorio de Proveedores</span>
+                <div class="d-flex align-items-center ms-auto">
+                    <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#supplierModal">
+                        <i class="bi bi-person-plus me-2"></i>Nuevo Proveedor
+                    </button>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=4318FF&color=fff" alt="Perfil" class="profile-img me-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row g-4">
+            <!-- Supplier Card -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=Dell&background=0d6efd&color=fff&rounded=true&size=48" class="me-3">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Dell Technologies</h6>
+                                <small class="text-muted">Electrónica e Informática</small>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light border-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                            <ul class="dropdown-menu shadow-sm border-0">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2 text-primary"></i> Editar</a></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i> Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled mb-0 small text-muted">
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +1 800-456-3355</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> ventas@dell.com</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> Round Rock, TX, USA</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Supplier Card -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=LG&background=dc3545&color=fff&rounded=true&size=48" class="me-3">
+                            <div>
+                                <h6 class="mb-0 fw-bold">LG Electronics</h6>
+                                <small class="text-muted">Pantallas y Monitores</small>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light border-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                            <ul class="dropdown-menu shadow-sm border-0">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2 text-primary"></i> Editar</a></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i> Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled mb-0 small text-muted">
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +82 2-3777-1114</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> contacto@lg.com</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> Seúl, Corea del Sur</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Supplier Card -->
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-center">
+                            <img src="https://ui-avatars.com/api/?name=HM&background=198754&color=fff&rounded=true&size=48" class="me-3">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Herman Miller</h6>
+                                <small class="text-muted">Mobiliario de Oficina</small>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light border-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                            <ul class="dropdown-menu shadow-sm border-0">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-pencil me-2 text-primary"></i> Editar</a></li>
+                                <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-trash me-2"></i> Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="list-unstyled mb-0 small text-muted">
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +1 888-798-0202</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@hermanmiller.com</li>
+                        <li><i class="bi bi-geo-alt me-2"></i> Zeeland, MI, USA</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Form -->
+<div class="modal fade" id="supplierModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow-lg">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Agregar Proveedor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold">Nombre de la Empresa</label>
+                        <input type="text" class="form-control" placeholder="Ej. Microsoft Corporation">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold">Sector / Rubro</label>
+                        <input type="text" class="form-control" placeholder="Ej. Software">
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-semibold">Teléfono</label>
+                            <input type="text" class="form-control" placeholder="+1 ...">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-semibold">Correo Electrónico</label>
+                            <input type="email" class="form-control" placeholder="correo@empresa.com">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-semibold">Dirección</label>
+                        <input type="text" class="form-control" placeholder="Ubicación principal">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary px-4">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

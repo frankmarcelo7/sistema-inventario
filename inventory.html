@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimientos - Sistema de Gestión de Inventario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <i class="bi bi-box-seam logo-icon"></i>
+            <h4 class="mb-0 fw-bold">Inventario</h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li><a href="dashboard.html"><i class="bi bi-grid-1x2"></i> <span>Dashboard</span></a></li>
+            <li><a href="products.html"><i class="bi bi-box"></i> <span>Productos</span></a></li>
+            <li><a href="categories.html"><i class="bi bi-tags"></i> <span>Categorías</span></a></li>
+            <li><a href="suppliers.html"><i class="bi bi-truck"></i> <span>Proveedores</span></a></li>
+            <li class="active"><a href="inventory.html"><i class="bi bi-arrow-left-right"></i> <span>Movimientos</span></a></li>
+            <li><a href="reports.html"><i class="bi bi-bar-chart"></i> <span>Reportes</span></a></li>
+            <li class="mt-4 border-top pt-3"><a href="profile.html"><i class="bi bi-person-circle"></i> <span>Mi Perfil</span></a></li>
+            <li><a href="index.html" class="text-danger"><i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg top-navbar glass-nav mb-4">
+            <div class="container-fluid">
+                <span class="navbar-brand">Entradas y Salidas de Inventario</span>
+                <div class="d-flex align-items-center ms-auto">
+                    <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#movementModal">
+                        <i class="bi bi-plus-circle me-2"></i>Registrar Movimiento
+                    </button>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=4318FF&color=fff" alt="Perfil" class="profile-img me-2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="card p-4">
+            <div class="row mb-4 align-items-center g-3">
+                <div class="col-12 col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-calendar3"></i></span>
+                        <input type="date" class="form-control bg-light border-0">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <select class="form-select bg-light border-0">
+                        <option value="">Tipo de Movimiento</option>
+                        <option value="in">Entrada</option>
+                        <option value="out">Salida</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 text-md-end">
+                    <button class="btn btn-outline-secondary"><i class="bi bi-download me-2"></i>Exportar CSV</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID Movimiento</th>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Responsable</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-muted fw-semibold">#MOV-8901</td>
+                            <td>15 Jul, 2026 - 14:30</td>
+                            <td><span class="fw-semibold">Laptop Dell XPS 15</span></td>
+                            <td><span class="badge bg-success bg-opacity-10 text-success"><i class="bi bi-arrow-down-left"></i> Entrada</span></td>
+                            <td class="fw-bold text-success">+50</td>
+                            <td>Admin User</td>
+                            <td class="text-muted small">Recepción de compra (Orden #102)</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted fw-semibold">#MOV-8902</td>
+                            <td>14 Jul, 2026 - 09:15</td>
+                            <td><span class="fw-semibold">Mouse Inalámbrico Logitech</span></td>
+                            <td><span class="badge bg-danger bg-opacity-10 text-danger"><i class="bi bi-arrow-up-right"></i> Salida</span></td>
+                            <td class="fw-bold text-danger">-12</td>
+                            <td>Carlos Ruiz</td>
+                            <td class="text-muted small">Asignación a equipo de diseño</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted fw-semibold">#MOV-8903</td>
+                            <td>12 Jul, 2026 - 11:00</td>
+                            <td><span class="fw-semibold">Monitor LG 27" 4K</span></td>
+                            <td><span class="badge bg-danger bg-opacity-10 text-danger"><i class="bi bi-arrow-up-right"></i> Salida</span></td>
+                            <td class="fw-bold text-danger">-5</td>
+                            <td>Ana Martínez</td>
+                            <td class="text-muted small">Venta al cliente (Fact. #450)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Form -->
+<div class="modal fade" id="movementModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 shadow-lg">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold">Registrar Nuevo Movimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-semibold">Tipo de Movimiento</label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check border rounded p-2 flex-fill text-center">
+                                    <input class="form-check-input ms-0 me-2" type="radio" name="movType" id="typeIn" checked>
+                                    <label class="form-check-label fw-bold text-success" for="typeIn">Entrada</label>
+                                </div>
+                                <div class="form-check border rounded p-2 flex-fill text-center">
+                                    <input class="form-check-input ms-0 me-2" type="radio" name="movType" id="typeOut">
+                                    <label class="form-check-label fw-bold text-danger" for="typeOut">Salida</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-semibold">Fecha</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label text-muted small fw-semibold">Producto</label>
+                            <select class="form-select">
+                                <option selected>Seleccionar producto...</option>
+                                <option value="1">Laptop Dell XPS 15 (Stock actual: 45)</option>
+                                <option value="2">Monitor LG 27" 4K (Stock actual: 2)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted small fw-semibold">Cantidad</label>
+                            <input type="number" class="form-control" value="1" min="1">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted small fw-semibold">Motivo / Documento Referencia</label>
+                            <textarea class="form-control" rows="2" placeholder="Ej. Factura de compra #..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary px-4">Confirmar Movimiento</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
