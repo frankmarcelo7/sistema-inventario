@@ -67,14 +67,11 @@
                     <div class="dropdown me-3">
                         <a href="#" class="text-secondary position-relative fs-5" data-bs-toggle="dropdown">
                             <i class="bi bi-bell"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-                                <span class="visually-hidden">Nuevas alertas</span>
-                            </span>
+                            <span id="alerta-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:9px"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 mt-2">
                             <li><h6 class="dropdown-header">Notificaciones</h6></li>
-                            <li><a class="dropdown-item py-2" href="#"><i class="bi bi-exclamation-circle text-warning me-2"></i> Stock bajo en 'Monitores'</a></li>
-                            <li><a class="dropdown-item py-2" href="#"><i class="bi bi-check-circle text-success me-2"></i> Recepción de mercancía</a></li>
+                            <div id="alertas-lista"><li><a class="dropdown-item py-2" href="#"><i class="bi bi-check-circle text-success me-2"></i> Cargando alertas...</a></li></div>
                         </ul>
                     </div>
 
@@ -105,7 +102,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-muted mb-1 fw-semibold small text-uppercase">Total Productos</p>
-                                <h3 class="mb-0 fw-bold">1,245</h3>
+                                <h3 class="mb-0 fw-bold" id="kpi-total-productos">...</h3>
                             </div>
                             <div class="icon-wrapper icon-primary">
                                 <i class="bi bi-box"></i>
@@ -125,7 +122,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-muted mb-1 fw-semibold small text-uppercase">Stock Disponible</p>
-                                <h3 class="mb-0 fw-bold">8,540</h3>
+                                <h3 class="mb-0 fw-bold" id="kpi-total-stock">...</h3>
                             </div>
                             <div class="icon-wrapper icon-success">
                                 <i class="bi bi-check2-circle"></i>
@@ -145,7 +142,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-muted mb-1 fw-semibold small text-uppercase">Agotados</p>
-                                <h3 class="mb-0 fw-bold">14</h3>
+                                <h3 class="mb-0 fw-bold" id="kpi-agotados">...</h3>
                             </div>
                             <div class="icon-wrapper icon-danger">
                                 <i class="bi bi-exclamation-triangle"></i>
@@ -165,7 +162,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-muted mb-1 fw-semibold small text-uppercase">Categorías</p>
-                                <h3 class="mb-0 fw-bold">32</h3>
+                                <h3 class="mb-0 fw-bold" id="kpi-categorias">...</h3>
                             </div>
                             <div class="icon-wrapper icon-warning">
                                 <i class="bi bi-tags"></i>
@@ -225,46 +222,8 @@
                                     <th>Estado</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#MOV-001</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-light p-2 rounded me-3"><i class="bi bi-laptop text-primary"></i></div>
-                                            <span class="fw-semibold">Laptop Dell XPS 15</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-success">Entrada</span></td>
-                                    <td>+50</td>
-                                    <td class="text-muted">15 Jul, 2026</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success">Completado</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#MOV-002</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-light p-2 rounded me-3"><i class="bi bi-mouse text-primary"></i></div>
-                                            <span class="fw-semibold">Mouse Inalámbrico Logitech</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-danger">Salida</span></td>
-                                    <td>-12</td>
-                                    <td class="text-muted">14 Jul, 2026</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success">Completado</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#MOV-003</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-light p-2 rounded me-3"><i class="bi bi-display text-primary"></i></div>
-                                            <span class="fw-semibold">Monitor LG 27"</span>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-warning text-dark">Pendiente</span></td>
-                                    <td>+20</td>
-                                    <td class="text-muted">14 Jul, 2026</td>
-                                    <td><span class="badge bg-warning bg-opacity-10 text-warning">En tránsito</span></td>
-                                </tr>
+                            <tbody id="tabla-movimientos-recientes">
+                                <tr><td colspan="6" class="text-center text-muted py-4"><div class="spinner-border spinner-border-sm me-2"></div>Cargando...</td></tr>
                             </tbody>
                         </table>
                     </div>
