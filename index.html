@@ -26,12 +26,12 @@
             <p class="text-muted">Ingresa tus credenciales para acceder</p>
         </div>
 
-        <form action="dashboard.html">
+        <form id="login-form" novalidate>
             <div class="mb-3">
                 <label for="email" class="form-label fw-semibold text-secondary small">Correo Electrónico</label>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
-                    <input type="email" class="form-control border-start-0 ps-0" id="email" placeholder="admin@empresa.com" required>
+                    <input type="email" class="form-control border-start-0 ps-0" id="email" placeholder="admin@empresa.com" required autocomplete="username">
                 </div>
             </div>
             
@@ -42,9 +42,11 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
-                    <input type="password" class="form-control border-start-0 ps-0" id="password" placeholder="••••••••" required>
+                    <input type="password" class="form-control border-start-0 ps-0" id="password" placeholder="••••••••" required autocomplete="current-password">
                 </div>
             </div>
+
+            <div id="login-error" class="alert alert-danger d-none py-2 small"></div>
 
             <div class="form-check mb-4">
                 <input class="form-check-input" type="checkbox" value="" id="rememberMe">
@@ -53,7 +55,7 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 py-2 fs-5 mb-3">Ingresar al Sistema</button>
+            <button type="submit" id="login-btn" class="btn btn-primary w-100 py-2 fs-5 mb-3">Ingresar al Sistema</button>
         </form>
         
         <div class="text-center mt-4">
@@ -63,5 +65,55 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        (function () {
+            // Si ya hay sesión, ir al dashboard
+            if (AUTH.isAuthenticated()) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            const form  = document.getElementById('login-form');
+            const btn   = document.getElementById('login-btn');
+            const error = document.getElementById('login-error');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                error.classList.add('d-none');
+
+                const email    = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    error.textContent = 'Ingresa tu correo y contraseña.';
+                    error.classList.remove('d-none');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verificando...';
+
+                try {
+                    const res  = await fetch('http://localhost:3000/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    const data = await res.json();
+
+                    if (!data.ok) throw new Error(data.error || 'Credenciales incorrectas');
+
+                    AUTH.setSession(data.token, data.usuario);
+                    window.location.href = 'dashboard.html';
+                } catch (err) {
+                    error.textContent = err.message;
+                    error.classList.remove('d-none');
+                    btn.disabled = false;
+                    btn.textContent = 'Ingresar al Sistema';
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

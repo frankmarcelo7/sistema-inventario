@@ -5,6 +5,17 @@
 
 const API = 'http://localhost:3000/api';
 
+// Fetch autenticado (adjunta el JWT si existe)
+async function apiFetch(url, options = {}) {
+    options.headers = { ...(options.headers || {}), ...(typeof AUTH !== 'undefined' ? AUTH.header() : {}) };
+    const res = await fetch(url, options);
+    if (res.status === 401 && typeof AUTH !== 'undefined') {
+        AUTH.logout();
+        throw new Error('Sesión expirada');
+    }
+    return res;
+}
+
 // ── Utilidades ───────────────────────────────────────────────────
 
 function formatCurrency(val) {
@@ -44,7 +55,7 @@ async function cargarDashboard() {
 
     try {
         // KPIs
-        const { data } = await fetch(`${API}/dashboard/stats`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/dashboard/stats`).then(r => r.json());
         document.getElementById('kpi-total-productos').textContent = Number(data.total_productos).toLocaleString();
         document.getElementById('kpi-total-stock').textContent     = Number(data.total_stock).toLocaleString();
         document.getElementById('kpi-agotados').textContent        = Number(data.agotados).toLocaleString();
@@ -56,7 +67,7 @@ async function cargarDashboard() {
         if (badgeEl) badgeEl.textContent = alertCount > 0 ? alertCount : '';
 
         // Movimientos recientes
-        const movRes = await fetch(`${API}/dashboard/movimientos-recientes`).then(r => r.json());
+        const movRes = await apiFetch(`${API}/dashboard/movimientos-recientes`).then(r => r.json());
         const tbody = document.getElementById('tabla-movimientos-recientes');
         if (tbody && movRes.data.length > 0) {
             tbody.innerHTML = movRes.data.map(m => `
@@ -85,7 +96,7 @@ async function cargarDashboard() {
         }
 
         // Alertas dropdown
-        const alertRes = await fetch(`${API}/dashboard/alertas`).then(r => r.json());
+        const alertRes = await apiFetch(`${API}/dashboard/alertas`).then(r => r.json());
         const alertList = document.getElementById('alertas-lista');
         if (alertList && alertRes.data.length > 0) {
             alertList.innerHTML = alertRes.data.map(a => `
@@ -104,7 +115,7 @@ async function cargarDashboard() {
 }
 
 async function marcarAlertaLeida(id) {
-    await fetch(`${API}/dashboard/alertas/${id}/leer`, { method: 'PUT' });
+    await apiFetch(`${API}/dashboard/alertas/${id}/leer`, { method: 'PUT' });
     cargarDashboard();
 }
 
@@ -121,7 +132,7 @@ async function cargarProductos() {
         if (search)    params.append('search', search);
         if (categoria) params.append('categoria', categoria);
 
-        const { data } = await fetch(`${API}/productos?${params}`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/productos?${params}`).then(r => r.json());
 
         if (data.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-5">No se encontraron productos</td></tr>';
@@ -181,7 +192,7 @@ async function guardarProducto() {
     try {
         const url    = id ? `${API}/productos/${id}` : `${API}/productos`;
         const method = id ? 'PUT' : 'POST';
-        const res    = await fetch(url, {
+        const res    = await apiFetch(url, {
             method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -200,7 +211,7 @@ async function guardarProducto() {
 
 async function editarProducto(id) {
     try {
-        const { data } = await fetch(`${API}/productos/${id}`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/productos/${id}`).then(r => r.json());
         document.getElementById('producto-id').value              = data.id;
         document.getElementById('producto-sku').value             = data.sku;
         document.getElementById('producto-nombre').value          = data.nombre;
@@ -217,7 +228,7 @@ async function editarProducto(id) {
 async function eliminarProducto(id, nombre) {
     if (!confirm(`¿Eliminar el producto "${nombre}"?`)) return;
     try {
-        const res  = await fetch(`${API}/productos/${id}`, { method: 'DELETE' });
+        const res  = await apiFetch(`${API}/productos/${id}`, { method: 'DELETE' });
         const data = await res.json();
         if (!data.ok) throw new Error(data.error);
         showToast(data.message);
@@ -234,7 +245,7 @@ async function cargarProveedores() {
     if (!container) return;
 
     try {
-        const { data } = await fetch(`${API}/proveedores`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/proveedores`).then(r => r.json());
         const colors = ['0d6efd','dc3545','198754','fd7e14','6f42c1','20c997'];
 
         container.innerHTML = data.map((p, i) => `
@@ -284,7 +295,7 @@ async function guardarProveedor() {
         contacto_nombre: document.getElementById('prov-contacto')?.value,
     };
     try {
-        const res  = await fetch(`${API}/proveedores`, {
+        const res  = await apiFetch(`${API}/proveedores`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -301,7 +312,7 @@ async function guardarProveedor() {
 
 async function eliminarProveedor(id, nombre) {
     if (!confirm(`¿Desactivar el proveedor "${nombre}"?`)) return;
-    const res  = await fetch(`${API}/proveedores/${id}`, { method: 'DELETE' });
+    const res  = await apiFetch(`${API}/proveedores/${id}`, { method: 'DELETE' });
     const data = await res.json();
     showToast(data.message);
     cargarProveedores();
@@ -320,7 +331,7 @@ async function cargarMovimientos() {
         if (tipo)  params.append('tipo', tipo);
         if (fecha) params.append('fecha', fecha);
 
-        const { data } = await fetch(`${API}/movimientos?${params}`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/movimientos?${params}`).then(r => r.json());
 
         if (data.length === 0) {
             tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-5">Sin movimientos registrados</td></tr>';
@@ -356,7 +367,7 @@ async function guardarMovimiento() {
         usuario_id:  1
     };
     try {
-        const res  = await fetch(`${API}/movimientos`, {
+        const res  = await apiFetch(`${API}/movimientos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -379,7 +390,7 @@ async function cargarCategorias() {
     if (!container) return;
 
     try {
-        const { data } = await fetch(`${API}/categorias`).then(r => r.json());
+        const { data } = await apiFetch(`${API}/categorias`).then(r => r.json());
         container.innerHTML = data.map(c => `
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="card p-4 h-100 text-center">
@@ -403,9 +414,9 @@ async function cargarCategorias() {
 async function cargarSelectores() {
     try {
         const [catRes, provRes, prodRes] = await Promise.all([
-            fetch(`${API}/categorias`).then(r => r.json()),
-            fetch(`${API}/proveedores`).then(r => r.json()),
-            fetch(`${API}/productos`).then(r => r.json()),
+            apiFetch(`${API}/categorias`).then(r => r.json()),
+            apiFetch(`${API}/proveedores`).then(r => r.json()),
+            apiFetch(`${API}/productos`).then(r => r.json()),
         ]);
 
         // Selectores de categoría
@@ -472,7 +483,7 @@ const initCharts = async () => {
     const catCtx = document.getElementById('categoryChart');
     if (catCtx) {
         try {
-            const { data } = await fetch(`${API}/categorias`).then(r => r.json());
+            const { data } = await apiFetch(`${API}/categorias`).then(r => r.json());
             new Chart(catCtx, {
                 type: 'doughnut',
                 data: {
@@ -491,7 +502,7 @@ const initCharts = async () => {
     const stockCtx = document.getElementById('stockChart');
     if (stockCtx) {
         try {
-            const { data } = await fetch(`${API}/productos`).then(r => r.json());
+            const { data } = await apiFetch(`${API}/productos`).then(r => r.json());
             const top5 = data.sort((a, b) => b.stock_actual - a.stock_actual).slice(0, 5);
             new Chart(stockCtx, {
                 type: 'bar',
@@ -510,6 +521,16 @@ const initCharts = async () => {
 // ── INICIALIZACIÓN ───────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Proteger página: redirigir a login si no hay sesión
+    if (typeof AUTH !== 'undefined' && !AUTH.guard()) return;
+
+    // Logout: limpiar sesión en cualquier enlace de "Cerrar Sesión"
+    document.querySelectorAll('a[href="index.html"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            if (typeof AUTH !== 'undefined') { e.preventDefault(); AUTH.logout(); }
+        });
+    });
+
     // Inicializar tooltips de Bootstrap
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 
@@ -542,3 +563,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('producto-descripcion').value = '';
     });
 });
+
+

@@ -299,9 +299,9 @@ ORDER BY m.fecha_movimiento DESC;
 -- ============================================================
 
 INSERT INTO usuarios (nombre, apellido, email, password_hash, rol) VALUES
-('Admin',   'Sistema',   'admin@inventario.com',   '$2b$12$hashAdmin',   'admin'),
-('Carlos',  'Ruiz',      'carlos@inventario.com',  '$2b$12$hashCarlos',  'operador'),
-('Ana',     'Martínez',  'ana@inventario.com',     '$2b$12$hashAna',     'supervisor')
+('Admin',   'Sistema',   'admin@inventario.com',   '$2b$12$LwxNVAKfxNiFGaFCwiKbueAlN4ws/L/MD7QEHkryvzR3PBCVjCtvO',   'admin'),
+('Carlos',  'Ruiz',      'carlos@inventario.com',  '$2b$12$0i1cqc67cnNBTaYJaE0Dz.CIjEMZ0XNntKcf8mIxwLUzDO/2/Fae6',  'operador'),
+('Ana',     'Martínez',  'ana@inventario.com',     '$2b$12$F87vXUEArlZPCHz7L1Xi1emUUY4mUqP1gOwfHTlQp72YcU1rw8ndy',     'supervisor')
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO categorias (nombre, descripcion, color, icono) VALUES

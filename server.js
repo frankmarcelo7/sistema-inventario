@@ -15,11 +15,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
 // ── Rutas API ──────────────────────────────────────────────
+const { router: authRouter, verificarToken } = require('./routes/auth');
+app.use('/api/auth', authRouter);
+
 app.use('/api/dashboard',   require('./routes/dashboard'));
-app.use('/api/productos',   require('./routes/productos'));
-app.use('/api/categorias',  require('./routes/categorias'));
-app.use('/api/proveedores', require('./routes/proveedores'));
-app.use('/api/movimientos', require('./routes/movimientos'));
+app.use('/api/productos',   verificarToken, require('./routes/productos'));
+app.use('/api/categorias',  verificarToken, require('./routes/categorias'));
+app.use('/api/proveedores', verificarToken, require('./routes/proveedores'));
+app.use('/api/movimientos', verificarToken, require('./routes/movimientos'));
 
 // ── Ruta de salud ──────────────────────────────────────────
 app.get('/api/health', (req, res) => {
